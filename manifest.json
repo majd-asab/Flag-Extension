@@ -7,7 +7,7 @@
    "content_scripts": [
     {
 	"matches": ["*://*/*"],
-        "js": ["popup.js"]
+        "js": ["extension-script.js"]
 
     }],
   "version": "1.0",

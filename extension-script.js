@@ -34,4 +34,4 @@ var req= new XMLHttpRequest();
 req.open("GET","http://127.0.0.1:1302/"+refinedUrl,false);
 req.send(null);
 
-div.textContent = refinedUrl+" "+ req.responseText;
+div.textContent = req.responseText;
