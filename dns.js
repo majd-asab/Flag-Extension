@@ -60,9 +60,9 @@ function checkInFile(url,cb){
 		}
 		else{
 			dnsLookUp(url,function(address){	
-					process.nextTick(function(){return cb(address)});
-					//append to file
-					fs.appendFile(__dirname+'/dns-cache.txt', url+" "+address+"\n", function(err){
+					var fullAddress = url+" "+address;
+					process.nextTick(function(){return cb(fullAddress)});
+					fs.appendFile(__dirname+'/dns-cache.txt', fullAddress+"\n", function(err){
  					 if (err){
 						console.log(err);
 					 }
