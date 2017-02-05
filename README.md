@@ -6,7 +6,7 @@ While there are other full extensions that are similar, this project point is to
 ## Installation
 
 * the entension part will be up on google-chrome's extension site available for download once the flags are mapped to the servers.   
-For the meanwhile follow the instruction to run on google chrome:
+For the meanwhile follow the instruction to run on google chrome:   
 1. clone the repo and place in a prefered location.
 2. open chrome://extensions  in google chrome and enable `developer mode`
 3. click on `Load unpacked extension...` and `open` the folder you cloned from the repo.   
@@ -28,4 +28,4 @@ Note:
 5. Submit a pull request :D
 
 
-TODO: Write license
+
