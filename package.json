@@ -1,0 +1,24 @@
+{
+  "name": "flag-extension",
+  "version": "1.0.0",
+  "description": "display ip address of the websites you visit, in addition to the flag of the servers geographical location",
+  "main": "dns.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/majd-kho/Flag-Extension.git"
+  },
+  "keywords": [
+    "dns",
+    "ip address",
+    "geolocation"
+  ],
+  "author": "Majd k.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/majd-kho/Flag-Extension/issues"
+  },
+  "homepage": "https://github.com/majd-kho/Flag-Extension#readme"
+}
