@@ -2,6 +2,7 @@ const dns = require("dns");
 const http = require("http");
 const fs = require("fs");
 const port = 1302;
+var ipLocator =  require('./geo-ip-lookup.js');
 
 /******************************************************************************
 *Dns lookup function
@@ -12,6 +13,9 @@ function dnsLookUp(url,cb){
 					console.log("[ERROR]:" + err);
 					}
 				else{
+					if(addresses !== undefined){					
+					ipLocator.locateIP(addresses,function(data){console.log(data.country.toString().toLowerCase())});
+					}
 					process.nextTick(function(){return cb(addresses)});
 				}
 			});
@@ -113,21 +117,18 @@ http.createServer(function(request, response){
 		if(data === false){
 			createDnsFile(url,function(addressFromLookUp){
 			response.writeHead(200, {"Content-Type": "text/html"});		
-			response.write(addressFromLookUp);
-			response.end();
+			response.end(addressFromLookUp);
 			});
 		}
 		else if(data === 1){
 			findLine(url,function(addressFromFile){
 			response.writeHead(200, {"Content-Type": "text/html"});		
-			response.write(addressFromFile);
-			response.end();
+			response.end(addressFromFile);
 			});
 		}
 		else{
 			response.writeHead(200, {"Content-Type": "text/html"});		
-			response.write(data);
-			response.end();
+			response.end(data);
 
 		}
 		
