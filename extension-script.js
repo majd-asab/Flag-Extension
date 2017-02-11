@@ -29,6 +29,7 @@ doc.style.borderColor= "#d3d3d3";
 doc.style.borderBottom= "0px";
 doc.style.outline= "0px";
 doc.style.margin= "3px";
+doc.style.display="inline-block";
  
 
 
@@ -36,5 +37,18 @@ var req= new XMLHttpRequest();
 req.open("GET","http://127.0.0.1:1302/"+refinedUrl,false);
 req.send(null);
 
-div.textContent = req.responseText;
+div.textContent = req.responseText.split(" ")[1];
+var countryCode = req.responseText.split(" ")[2];
 
+
+var img = document.createElement("img");
+div.appendChild(img);
+img.id ="imFlag";
+var flag = "flags/"+countryCode+".png";
+
+img.setAttribute("src",chrome.extension.getURL(flag));
+img.setAttribute("width","19px");
+img.setAttribute("height","19px");
+img.style.zIndex ="9999";
+img.style.display ="inline-block";
+img.style.margin= "4px";
