@@ -16,6 +16,11 @@
     "default_icon": "icon/flag.png"
   },
   "permissions": [
-    "http://*/"
+    "http://*/",
+    "file:///*"
+  ],
+
+ "web_accessible_resources": [
+    "flags/*.png"
   ]
 }
