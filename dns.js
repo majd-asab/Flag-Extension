@@ -13,10 +13,12 @@ function dnsLookUp(url,cb){
 					console.log("[ERROR]:" + err);
 					}
 				else{
-					if(addresses !== undefined){					
-					ipLocator.locateIP(addresses,function(data){console.log(data.country.toString().toLowerCase())});
-					}
-					process.nextTick(function(){return cb(addresses)});
+									
+					ipLocator.locateIP(addresses,function(data){
+					var country = data.country.toString().toLowerCase();
+					process.nextTick(function(){return cb(addresses +" " + country)});
+					});
+
 				}
 			});
 }
