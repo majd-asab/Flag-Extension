@@ -7,7 +7,7 @@
    "content_scripts": [
     {
 	"matches": ["*://*/*"],
-        "js": ["extension-script.js"]
+	"js": ["mtl-design-script.js"]
 
     }],
   "version": "1.0",
@@ -21,6 +21,7 @@
   ],
 
  "web_accessible_resources": [
-    "flags/*.png"
+    "flags/*.png",
+    "css/*.css"
   ]
 }
