@@ -6,6 +6,7 @@ var ipLocator =  require('./geo-ip-lookup.js');
 
 /******************************************************************************
 *Dns lookup function
+*perfom dns lookup and finds the server's country of origin.
 *******************************************************************************/
 function dnsLookUp(url,cb){
 	dns.lookup(url,function (err,addresses){
@@ -44,8 +45,13 @@ function createDnsFile(url,cb){
 
 
 /*************************************************************************************
-*Checks for file existance
-*Checks if dns lookup already exists
+*DNS cache lookup.
+*the function either returns that the file does not exist.
+*OR
+*logs the errors that could've occured.
+*OR
+*checks in the "dns-cache" file if the url exists, if so, return 1, indicating it exits
+*else, will call the DNS lookup function, save the new value, and send it back to the client.
 **************************************************************************************/
 function checkInFile(url,cb){
 	fs.readFile(__dirname+'/dns-cache.txt', function (err, data)  { 
@@ -66,10 +72,10 @@ function checkInFile(url,cb){
 		}
 		else{
 			dnsLookUp(url,function(address){	
-					var fullAddress = url+" "+address;
+					var fullAddress = url+" "+address; //send url + ip 
 					process.nextTick(function(){return cb(fullAddress)});
 					fs.appendFile(__dirname+'/dns-cache.txt', fullAddress+"\n", function(err){
- 					 if (err){
+ 					 if (err !== null){
 						console.log(err);
 					 }
 
@@ -82,7 +88,7 @@ function checkInFile(url,cb){
 
 
 /**************************************************************************
-* return dns and url  from file
+* return dns and url  from file IF "dns-cache" contains the address.
 **************************************************************************/
 function findLine(url,cb){
 	fs.readFile(__dirname+'/dns-cache.txt', function (err, data)  {
@@ -90,13 +96,12 @@ function findLine(url,cb){
 			console.log(err);		
 	}
 	else{
-		var dataString = data.toString('utf-8');
-		var splitLines = dataString.split("\n");
-		splitLines.pop();
+		var dataString = data.toString('utf-8'); //convert the file buffer into utf-8 string
+		var splitLines = dataString.split("\n"); // split all by lines, to have 1 address/line
+		splitLines.pop(); // remove the empty line
 
-		
 		for(var i = 0; i < splitLines.length; i++){
-			if(splitLines[i].match(url) ){
+			if(splitLines[i].match(url) ){ // if the line from file matches the url, return to client.
 				var data = splitLines[i];
 				process.nextTick(function(){return cb(data)});
 			}
@@ -116,19 +121,19 @@ http.createServer(function(request, response){
 	
 	//check in dns cached file
 	checkInFile(url, function(data){
-		if(data === false){
+		if(data === false){ //no "dns-cache" file. perfrom dns lookup and save in file.
 			createDnsFile(url,function(addressFromLookUp){
 			response.writeHead(200, {"Content-Type": "text/html"});		
 			response.end(addressFromLookUp);
 			});
 		}
-		else if(data === 1){
+		else if(data === 1){ // address found in "dns-cache" file. return data to client.
 			findLine(url,function(addressFromFile){
 			response.writeHead(200, {"Content-Type": "text/html"});		
 			response.end(addressFromFile);
 			});
 		}
-		else{
+		else{ // "dns-cache" file exits, but data no found. perform dns lookup and return to client.
 			response.writeHead(200, {"Content-Type": "text/html"});		
 			response.end(data);
 
