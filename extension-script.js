@@ -11,6 +11,8 @@ var div = document.createElement("div");
 document.body.appendChild(div);
 div.id = "flagExtension";
 
+
+/**needs to be removed and link the css file
 var doc = document.getElementById("flagExtension");
 doc.style.position = "fixed";
 doc.style.bottom= "0px";
@@ -30,7 +32,7 @@ doc.style.borderBottom= "0px";
 doc.style.outline= "0px";
 doc.style.margin= "3px";
 doc.style.display="inline-block";
- 
+**/ 
 
 
 var req= new XMLHttpRequest();
