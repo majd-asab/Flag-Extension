@@ -67,3 +67,11 @@
 	border-color: #d3d3d3;
 	border-bottom: 0px;
 }
+
+#myFlag{
+	width:32px;
+	height:32px;
+	z-index: 9999;
+	display: inline-block;
+	margin:4px;
+}
